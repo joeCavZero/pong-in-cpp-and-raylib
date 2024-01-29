@@ -14,7 +14,7 @@ public:
     Color main_color;
     Color bkg_color;
 
-    Game(int screen_width, int screen_height, const char *title);
+    Game(int screen_width, int screen_height, const char *title , Color main_color, Color bkg_color);
     ~Game();
     void InitGame();
     void GameLoop();

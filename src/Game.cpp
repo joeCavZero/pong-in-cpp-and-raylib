@@ -6,8 +6,8 @@
 #include "Paddle.h"
 #include "Ball.h"
 
-#define MAIN_COLOR = WHITE
-#define BKG_COLOR = BLACK
+#define MAIN_COLOR WHITE
+#define BKG_COLOR BLACK
 
 
 Game::Game(int screen_width, int screen_height, const char *title, Color main_color, Color bkg_color)
@@ -16,7 +16,7 @@ Game::Game(int screen_width, int screen_height, const char *title, Color main_co
     this->screen_height = screen_height;
     this->title = title;
     this->main_color = main_color;
-    this->bkg_color = bkg_color
+    this->bkg_color = bkg_color;
 }
 
 Game::~Game() {}
@@ -29,31 +29,54 @@ void Game::InitGame()
 void Game::GameLoop()
 {
 
-    Paddle p1 = Paddle(
-        4.0,
-        this->screen_height/2,
-        MAIN_COLOR);
+    Paddle p1 = Paddle::New(1);
+    Paddle p2 = Paddle::New(2);
 
-    Paddle p2 = Paddle(
-        screen_width - 4.0,
-        screen_height/2,
-        MAIN_COLOR
-    );
+    Ball ball = Ball::New(
+        screen_width / 2 , screen_height / 2, 
+        0, 0, 
+        screen_width, screen_height);
 
-    Ball ball = Ball(
-        screen_width/2,
-        screen_height/2
-    );
+    //-----------
+
+    Font gameFont = LoadFont("./../assets/fonts/HachicroUndertaleBattleFontRegular-L3zlg.ttf");
+
+    //------ LOOP
     while (!WindowShouldClose())
     {
 
         p1.Update();
+        p2.Update();
+        ball.Update();
 
+
+        //checa se bateu no paddle
+        if (ball.CheckCollisionWithPaddle(p1)){
+            std::cout << "Bateu no p1 kkkkk\n";
+            ball.motion_x = 1;
+        } else if (ball.CheckCollisionWithPaddle(p2)){
+            ball.motion_x = -1;
+        }
+        
         BeginDrawing();
 
         ClearBackground(BLACK);
-        p1.Draw();
-        DrawText("kkKKKKKK de primeira", 190, 200, 20, LIGHTGRAY);
+
+            p1.Draw();
+            p2.Draw();
+            ball.Draw();
+
+            
+            DrawTextEx(gameFont,
+                "teste", 
+                {100,100}, 
+                90.0,1.0,
+                WHITE);
+            DrawLineEx(
+                {this->screen_width/2 , 0 } ,
+                { this->screen_width/2 ,this->screen_height } ,
+                3.0,
+                WHITE);
         EndDrawing();
     }
 }
