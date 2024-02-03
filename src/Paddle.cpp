@@ -2,12 +2,13 @@
 #include "raylib.h"
 
 #include <iostream>
-#include <math.h>
+
+#include "utils/Settings.h"
 
 #define PADDLE_WIDTH 20.0
 #define PADDLE_HEIGHT 100.0
 
-Paddle::Paddle(int player_number, float x, float y, Color color , float max_x , float max_y)
+Paddle::Paddle(int player_number, float x, float y ,Color color, float max_x , float max_y)
 {   
     this->player_number = player_number;
     this->x = x;
@@ -79,7 +80,7 @@ Paddle Paddle::New(int player_type){
         return Paddle(
             1,
             0.0 , GetScreenHeight()/2,
-            WHITE,
+            MAIN_COLOR,
             GetScreenWidth(),
             GetScreenHeight()
         );
@@ -87,7 +88,7 @@ Paddle Paddle::New(int player_type){
         return Paddle(
             2,
             GetScreenWidth() - PADDLE_WIDTH , GetScreenHeight()/2 ,
-            WHITE,
+            MAIN_COLOR,
             GetScreenWidth(),
             GetScreenHeight()
         );

@@ -16,9 +16,9 @@ public:
 
     Game(int screen_width, int screen_height, const char *title , Color main_color, Color bkg_color);
     ~Game();
-    void InitGame();
+    void Start();
     void GameLoop();
-    void EndGame();
+    void End();
 
 private:
 };

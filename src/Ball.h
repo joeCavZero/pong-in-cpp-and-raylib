@@ -31,6 +31,7 @@ class Ball{
         void Movement();
         bool CheckCollisionWithPaddle(Paddle paddle);
         void CheckCollisionAtY();
+        void Restart();
 
         
 };

@@ -10,9 +10,8 @@ int main(void) {
 
     Game game = Game(SCREEN_WIDTH , SCREEN_HEIGHT , "K" , WHITE , BLACK);
 
-    game.InitGame();
-    game.GameLoop();
-    game.EndGame();
+    game.Start();
+    
     
 
     return 0;

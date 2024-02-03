@@ -54,17 +54,21 @@ void Ball::CheckCollisionAtY()
 {
     if (this->y + this->radius >= this->max_y)
     {
-        std::cout << "Bateu em baixo" << std::endl;
+        
         this->motion_y = -1;
     }
     else if (this->y - this->radius <= this->min_x)
     {
-        std::cout << "Bateu em cima" << std::endl;
+        
 
         this->motion_y = 1;
     }
 }
-
+void Ball::Restart(){
+    this->x = this->max_x / 2;
+    this->y = this->max_y /2;
+    this->speed = 2.0;
+}
 //--------------------------------------------------------------
 
 void Ball::Update(){
