@@ -3,16 +3,16 @@
 
 #include "Game.h"
 
+#include "utils/settings.h"
 
 int main(void) {
-    const int SCREEN_WIDTH = 800;
-    const int SCREEN_HEIGHT = 450;
+    
 
-    Game game = Game(SCREEN_WIDTH , SCREEN_HEIGHT , "K" , WHITE , BLACK);
+    Game game = Game::New( SCREEN_WIDTH , SCREEN_HEIGHT , "pong");
 
     game.Start();
-    
-    
+
+
 
     return 0;
 }

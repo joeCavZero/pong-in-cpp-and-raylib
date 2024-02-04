@@ -14,21 +14,26 @@
 
 
 
-Game::Game(int screen_width, int screen_height, const char *title, Color main_color, Color bkg_color)
+Game::Game(int screen_width, int screen_height, const char *title)
 {
     this->screen_width = screen_width;
     this->screen_height = screen_height;
     this->title = title;
-    this->main_color = main_color;
-    this->bkg_color = bkg_color;
 }
 
 Game::~Game() {}
+Game Game::New(int screen_width, int screen_height, const char *title)
+{
+    return Game(screen_width, screen_height, title);
+}
 void Game::Start()
 {
+    
+    
     InitWindow(this->screen_width, this->screen_height, this->title);
     SetTargetFPS(60);
 
+    SetExitKey(KEY_NULL);
     this->GameLoop();
 
     this->End();
@@ -39,7 +44,7 @@ void Game::GameLoop()
     //------ LOADING ASSETS ---------------
     Font gameFont = LoadFont("./../assets/fonts/HachicroUndertaleBattleFontRegular-L3zlg.ttf");
     
-    
+    RenderTexture2D render_display = LoadRenderTexture( screen_width , screen_height );
     //------ INITIALIZING OBJECTS ---------
 
     int point1 = 0;
@@ -65,6 +70,11 @@ void Game::GameLoop()
     //------ GAME LOOP ----------
     while (!WindowShouldClose())
     {
+        
+        if (IsKeyPressed(KEY_F11)){
+            ToggleGameFullscreen();
+        }
+
         timer.Update();
 
         p1.Update();
@@ -101,11 +111,9 @@ void Game::GameLoop()
         }
 
         //------- PARTE DO DRAW (DESENHO) ------------
-        BeginDrawing();
-
+        BeginTextureMode(render_display);
         ClearBackground(BKG_COLOR);
-
-            p1.Draw();
+        p1.Draw();
             p2.Draw();
             ball.Draw();
 
@@ -113,10 +121,24 @@ void Game::GameLoop()
             point_text_2.Draw();
             
             DrawLineEx(
-                {static_cast<float>(this->screen_width)/2 , 0.0f } ,
-                { static_cast<float>(this->screen_width)/2 , static_cast<float>(this->screen_height) } ,
+                {static_cast<float>( screen_width )/2 , 0.0f } ,
+                { static_cast<float>( screen_width ) / 2 , static_cast<float>(screen_height) } ,
                 3.0,
                 MAIN_COLOR);
+        EndTextureMode();
+        // - - - - - - - 
+        BeginDrawing();
+
+        ClearBackground(BKG_COLOR);
+
+        DrawTexturePro(
+            render_display.texture,
+            {0.0 ,0.0 , static_cast<float>(render_display.texture.width) , static_cast<float>(-render_display.texture.height)},
+            {0.0 ,0.0 , static_cast<float>(GetScreenWidth()) , static_cast<float>(GetScreenHeight())},
+            {0.0 ,0.0}, 0.0,
+            WHITE
+        );
+            
         EndDrawing();
     }
 }
@@ -124,4 +146,20 @@ void Game::GameLoop()
 void Game::End()
 {
     CloseWindow();
+}
+
+void Game::ToggleGameFullscreen()
+{
+    
+    if (IsWindowFullscreen() ){
+        ToggleFullscreen();
+        SetWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        return;
+    }else {
+        int monitor = GetCurrentMonitor();
+        
+        SetWindowSize(GetMonitorWidth(monitor),GetMonitorHeight(monitor));
+        ToggleFullscreen();
+    }
+    
 }

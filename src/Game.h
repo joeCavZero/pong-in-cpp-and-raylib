@@ -11,14 +11,13 @@ public:
     int screen_height;
     const char *title;
 
-    Color main_color;
-    Color bkg_color;
-
-    Game(int screen_width, int screen_height, const char *title , Color main_color, Color bkg_color);
+    Game(int screen_width, int screen_height, const char *title);
     ~Game();
+    static Game New(int screen_width, int screen_height, const char *title);
     void Start();
     void GameLoop();
     void End();
+    void ToggleGameFullscreen();
 
 private:
 };

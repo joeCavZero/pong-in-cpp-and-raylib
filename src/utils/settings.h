@@ -9,5 +9,8 @@
     #define TEXT_SIZE 20
     #define TEXT_SPACING 1.5
 
+    #define SCREEN_WIDTH   800
+    #define SCREEN_HEIGHT  450
+
 
 #endif

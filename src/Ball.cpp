@@ -3,6 +3,7 @@
 #include "Ball.h"
 #include "Paddle.h"
 #include <math.h>
+#include "utils/settings.h"
 
 
 Ball::Ball(float x , float y , float min_x , float min_y , float max_x , float max_y , float radius , Color color){
@@ -75,5 +76,9 @@ void Ball::Update(){
     this->Movement();
 }
 void Ball::Draw(){
-    DrawCircle(x,y,radius,color);
+    
+    DrawCircle(
+        x*(GetScreenWidth() / SCREEN_WIDTH),
+        y*(GetScreenHeight() / SCREEN_HEIGHT),
+        radius,color);
 }
